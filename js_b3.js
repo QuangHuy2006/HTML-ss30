@@ -32,7 +32,7 @@ function add() {
 function search() {
   let find = prompt(`nhap ten hoac id`);
   let findid = phone.findIndex((value) => value.id == find);
-  let findphone = phone.findIndex((value) => value.phone == find);
+  let findphone = phone.findIndex((value) => value.name == find);
   if (findid >= 0 && findphone < 0) {
     return phone[findid];
   } else {
@@ -40,7 +40,7 @@ function search() {
   }
 }
 function buy() {
-  let id = prompt(`nhap id mon an ban muon tim kiem: `);
+  let id = prompt(`nhap id ban muon tim kiem: `);
   let find = phone.findIndex((value) => value.id == id);
   if (find >= 0) {
     let amount = +prompt(`nhap so luong ban muon mua`);
@@ -63,7 +63,7 @@ function buy() {
 }
 function abate() {
   alert(`thanh toan thanh cong`);
-  carts = "";
+  carts.length = 0;
   return carts;
 }
 function sortIncrease() {
@@ -95,13 +95,16 @@ function total() {
     (value1, value2) => value1 + value2.price * value2.quantity,
     0
   );
-  return total;
+  return total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
 }
 function showbyrow() {
-  for(let i=0;i<phone.length;i++){
-    return phone[i].company + "-" + phone[i].quantity;
+  let result = '';
+  for (let i = 0; i < phone.length; i++) {
+    result += `${phone[i].company} - ${phone[i].quantity}\n`;
   }
+  return result;
 }
+
 do {
   choice = +prompt(`
         1. Hiển thị danh sách điện thoại theo hãng.
@@ -145,10 +148,13 @@ do {
       }
       break;
     case 7:
-      console.log(show());
+      console.log(total());
       break;
     case 8:
       console.log(showbyrow());
       break;
+    case 9:
+      alert(`thoat chuong trinh`);
+      break;
   }
-} while (choice != 8);
+} while (choice != 9);
